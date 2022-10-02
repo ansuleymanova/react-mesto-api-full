@@ -1,0 +1,14 @@
+.popup__box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 75vw;
+    padding: 40px 40px 0 40px;
+}
+
+@media screen and (max-width: 556px) {
+    .popup__box {
+        padding: 28px 0 0;
+    }
+}

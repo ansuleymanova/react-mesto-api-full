@@ -1,0 +1,19 @@
+.profile-area__profile-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 360px;
+}
+
+@media screen and (max-width: 940px) {
+    .profile-area__profile-info {
+        margin: 22.25px auto 36px;
+    }
+}
+
+@media screen and (max-width: 715px) {
+    .profile-area__profile-info {
+        align-items: center;
+        max-width: 288px;
+    }
+}

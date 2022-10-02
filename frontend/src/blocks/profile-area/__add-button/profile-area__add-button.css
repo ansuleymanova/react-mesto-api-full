@@ -1,0 +1,30 @@
+.profile-area__add-button {
+    background-image: url("../../../images/add.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 22px;
+    width: 150px;
+    height: 50px;
+    background-color: transparent;
+    border: 2px solid #fff;
+    transition: opacity .5s ease-out;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.profile-area__add-button:hover {
+    opacity: .6;
+}
+
+@media screen and (max-width: 940px) {
+    .profile-area__add-button {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .profile-area__add-button {
+        width: 88%;
+        background-size: 16px;
+    }
+}

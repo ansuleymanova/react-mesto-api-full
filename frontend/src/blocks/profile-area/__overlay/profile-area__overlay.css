@@ -1,0 +1,18 @@
+.profile-area__overlay {
+    position: absolute;
+    border: none;
+    height: 120px;
+    width: 120px;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity .3s ease-out;
+    background-color: #000;
+    background-image: url("../../../images/avatar-edit.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.profile-area__overlay:hover {
+    opacity: .8;
+    cursor: pointer;
+}

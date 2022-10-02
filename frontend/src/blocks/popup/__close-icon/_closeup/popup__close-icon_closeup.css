@@ -1,0 +1,13 @@
+.popup__close-icon_closeup {
+    position: absolute;
+    justify-self: center;
+    right: 0;
+    top: 0;
+}
+
+@media screen and (max-width: 556px) {
+    .popup__close-icon_closeup {
+        background-size: 20px;
+        height: 20px;
+    }
+}
