@@ -23,7 +23,7 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 
 app.use(cors({
   origin: ['https://asuleymanova.nomoredomains.icu', 'http://localhost:3001'],
-}))
+}));
 
 app.use(helmet());
 app.use(bodyParser.json());
@@ -59,14 +59,14 @@ app.use(auth);
 app.use('/users', require('./routes/users'));
 app.use('/cards', require('./routes/cards'));
 
-app.use(errorLogger);
-
-app.use(errors());
-
-app.use('*', auth, (req, res, next) => {
+app.use('*', (req, res, next) => {
   const error = new NotFoundError('Такой страницы не существует');
   next(error);
 });
+
+app.use(errorLogger);
+
+app.use(errors());
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {

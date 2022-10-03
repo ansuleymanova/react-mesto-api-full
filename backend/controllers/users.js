@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
 const { NODE_ENV, JWT_SECRET } = process.env;
 const User = require('../models/user');
 const BadRequestError = require('../errors/bad-request-err');
@@ -141,7 +142,7 @@ function login(req, res, next) {
         { expiresIn: '7d' },
       );
       res
-      .send({ token });
+        .send({ token });
     }).catch(next);
   }).catch((err) => {
     if (err.name === 'CastError' || err.name === 'ValidationError') {
