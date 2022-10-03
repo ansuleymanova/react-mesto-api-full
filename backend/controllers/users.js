@@ -7,7 +7,7 @@ const NotFoundError = require('../errors/not-found-err');
 const UnauthorizedError = require('../errors/unauthorized-err');
 const {
   OK,
-} = require('../utils/status-codes');
+} = require('../utils/consts');
 
 function getUsers(req, res, next) {
   User.find({})
@@ -27,8 +27,9 @@ function getSelf(req, res, next) {
       if (err.name === 'CastError') {
         const newErr = new BadRequestError('Переданы некорректные данные');
         next(newErr);
+      } else {
+        next(err);
       }
-      next(err);
     });
 }
 
@@ -44,8 +45,9 @@ function getUser(req, res, next) {
       if (err.name === 'CastError') {
         const newErr = new BadRequestError('Переданы некорректные данные');
         next(newErr);
+      } else {
+        next(err);
       }
-      next(err);
     });
 }
 
@@ -70,10 +72,11 @@ function createUser(req, res, next) {
           if (err.name === 'ValidationError') {
             const newErr = new BadRequestError('Переданы некорректные данные');
             next(newErr);
+          } else {
+            next(err);
           }
-          next(err);
         });
-    });
+    }).catch(next);
 }
 
 function patchUser(req, res, next) {
@@ -93,8 +96,9 @@ function patchUser(req, res, next) {
       if (err.name === 'CastError' || err.name === 'ValidationError') {
         const newErr = new BadRequestError('Переданы некорректные данные');
         next(newErr);
+      } else {
+        next(err);
       }
-      next(err);
     });
 }
 
@@ -115,8 +119,9 @@ function patchAvatar(req, res, next) {
       if (err.name === 'CastError' || err.name === 'ValidationError') {
         const newErr = new BadRequestError('Переданы некорректные данные');
         next(newErr);
+      } else {
+        next(err);
       }
-      next(err);
     });
 }
 
@@ -142,8 +147,9 @@ function login(req, res, next) {
     if (err.name === 'CastError' || err.name === 'ValidationError') {
       const newErr = new BadRequestError('Переданы некорректные данные');
       next(newErr);
+    } else {
+      next(err);
     }
-    next(err);
   });
 }
 

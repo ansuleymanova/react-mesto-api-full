@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const { celebrate, Joi, errors } = require('celebrate');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
-const { INTERNAL_SERVER_ERROR } = require('./utils/status-codes');
+const { INTERNAL_SERVER_ERROR, regEx } = require('./utils/consts');
 const NotFoundError = require('./errors/not-found-err');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
@@ -40,7 +40,7 @@ app.get('/crash-test', () => {
 app.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
+    password: Joi.string().required(),
   }),
 }), login);
 
@@ -49,9 +49,9 @@ app.post('/signup', celebrate({
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
     avatar: Joi.string()
-      .regex(/^https?:\/\/(?:www\.)?[-a-zA-z0-9:%._\\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-z0-9()@:%_\\+.~#?&/=]*)$/),
+      .regex(regEx),
     email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
+    password: Joi.string().required(),
   }),
 }), createUser);
 
@@ -63,7 +63,7 @@ app.use(errorLogger);
 
 app.use(errors());
 
-app.use('*', (req, res, next) => {
+app.use('*', auth, (req, res, next) => {
   const error = new NotFoundError('Такой страницы не существует');
   next(error);
 });

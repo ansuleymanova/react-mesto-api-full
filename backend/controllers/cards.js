@@ -4,12 +4,12 @@ const NotFoundError = require('../errors/not-found-err');
 const ForbiddenError = require('../errors/forbidden-err');
 const {
   OK,
-} = require('../utils/status-codes');
+} = require('../utils/consts');
 
 function getCards(req, res, next) {
   Card.find({})
     .then((cards) => res.status(OK).send(cards))
-    .catch(err => console.log(err));
+    .catch(next);
 }
 
 function createCard(req, res, next) {
@@ -20,8 +20,9 @@ function createCard(req, res, next) {
       if (err.name === 'ValidationError') {
         const newErr = new BadRequestError('Переданы некорректные данные');
         next(newErr);
+      } else {
+        next(err);
       }
-      next(err);
     });
 }
 
@@ -34,15 +35,15 @@ function deleteCard(req, res, next) {
       if (req.user._id !== card.owner.toString()) {
         throw new ForbiddenError('Удалить чужую карточку нельзя');
       }
-      card.remove();
-      res.send(card);
+      return card.remove().tnen(() => res.send({ message: 'Карточка удалена' }));
     })
     .catch((err) => {
       if (err.name === 'CastError') {
         const newErr = new BadRequestError('Переданы некорректные данные');
         next(newErr);
+      } else {
+        next(err);
       }
-      next(err);
     });
 }
 
@@ -62,8 +63,9 @@ function likeCard(req, res, next) {
       if (err.name === 'CastError') {
         const newErr = new BadRequestError('Переданы некорректные данные');
         next(newErr);
+      } else {
+        next(err);
       }
-      next(err);
     });
 }
 
@@ -83,8 +85,9 @@ function dislikeCard(req, res, next) {
       if (err.name === 'CastError') {
         const newErr = new BadRequestError('Переданы некорректные данные');
         next(newErr);
+      } else {
+        next(err);
       }
-      next(err);
     });
 }
 
